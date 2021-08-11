@@ -1,6 +1,6 @@
 #!/bin/sh
 clear while : do
-  exec ./rust_server/RustDedicated -batchmode -nographics \
+  exec ~/rust_server/RustDedicated -batchmode -nographics \
   # -server.ip $IPADDRESS \
   -server.port $PORT \
   # -rcon.ip $IPADDRESS \

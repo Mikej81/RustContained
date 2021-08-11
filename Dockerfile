@@ -56,11 +56,16 @@ COPY --from=builder /lib/i386-linux-gnu /lib/
 COPY --from=builder /root/installer/linux32/libstdc++.so.6 /lib/
 
 # copy Rust Startup Script
-COPY ./vanilla.sh /home/steam/vanilla.sh
-RUN chmod u+x /home/steam/vanilla.sh
+COPY ./vanilla.sh /root/vanilla.sh
+RUN chmod u+x /root/vanilla.sh
 
 # Update SteamCMD and verify latest version Add-Update Rust
-RUN steamcmd +login anonymous +force_install_dir ./rust_server/ +app_update 258550 +quit
+RUN steamcmd +login anonymous +force_install_dir ~/rust_server/ +app_update 258550 +quit
+
+#RUN wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh rustserver
+#RUN ./rustserver install
+
+# Add OwnerID and Moderator ID for OPSs
 
 # Install Oxide
 #RUN wget https://github.com/OxideMod/Snapshots/raw/master/Oxide-Rust_Linux.zip
@@ -70,4 +75,5 @@ RUN steamcmd +login anonymous +force_install_dir ./rust_server/ +app_update 2585
 # Set default command
 #ENTRYPOINT ["steamcmd"]
 #CMD ["+help", "+quit"]
-ENTRYPOINT [ "/home/steam/vanilla.sh" ]
+#ENTRYPOINT [ "/home/steam/vanilla.sh" ]
+ENTRYPOINT [ "bash" ]
