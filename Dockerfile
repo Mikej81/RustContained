@@ -46,6 +46,9 @@ COPY --from=builder /etc/ssl/certs /etc/ssl/certs
 COPY --from=builder /lib/i386-linux-gnu /lib/
 COPY --from=builder /root/installer/linux32/libstdc++.so.6 /lib/
 
+# copy Rust Startup Script
+COPY ./vanilla.sh /home/steam
+
 # Update SteamCMD and verify latest version Add-Update Rust
 RUN steamcmd +login anonymous +force_install_dir ./rust_server/ +app_update 258550 +quit
 
@@ -54,9 +57,7 @@ RUN steamcmd +login anonymous +force_install_dir ./rust_server/ +app_update 2585
 #RUN unzip Oxide-Rust_Linux.zip
 #RUN chmd u+x CSharpCompiler
 
-#add RustStartupScript.sh
-
-
 # Set default command
-ENTRYPOINT ["steamcmd"]
-CMD ["+help", "+quit"]
+#ENTRYPOINT ["steamcmd"]
+#CMD ["+help", "+quit"]
+ENTRYPOINT [ "/home/steam/vanilla.sh" ]
