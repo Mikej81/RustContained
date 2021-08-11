@@ -12,7 +12,7 @@ WORKDIR $HOME
 
 # Install prerequisites
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl tar
+    && apt-get install -y --no-install-recommends curl tar unzip wget
 
 # Donload and unpack installer
 RUN curl http://media.steampowered.com/installer/steamcmd_linux.tar.gz \
@@ -46,8 +46,16 @@ COPY --from=builder /etc/ssl/certs /etc/ssl/certs
 COPY --from=builder /lib/i386-linux-gnu /lib/
 COPY --from=builder /root/installer/linux32/libstdc++.so.6 /lib/
 
-# Update SteamCMD and verify latest version
+# Update SteamCMD and verify latest version Add-Update Rust
 RUN steamcmd +login anonymous +force_install_dir ./rust_server/ +app_update 258550 +quit
+
+# Install Oxide
+#RUN wget https://github.com/OxideMod/Snapshots/raw/master/Oxide-Rust_Linux.zip
+#RUN unzip Oxide-Rust_Linux.zip
+#RUN chmd u+x CSharpCompiler
+
+#add RustStartupScript.sh
+
 
 # Set default command
 ENTRYPOINT ["steamcmd"]
