@@ -28,6 +28,16 @@ FROM alpine:3
 ENV USER root
 ENV HOME /root
 
+ENV IPADDRESS null
+ENV PORT 28015
+ENV RCONPORT 28016
+ENV RCONPASSWORD null
+ENV MAXPLAYERS 75
+ENV SERVERNAME "RustContained"
+ENV SERVERIDENTITY "RustContained"
+ENV SERVERSEED null
+ENV WORLDSIZE 3000
+
 # Set working directory
 WORKDIR $HOME
 
@@ -47,7 +57,8 @@ COPY --from=builder /lib/i386-linux-gnu /lib/
 COPY --from=builder /root/installer/linux32/libstdc++.so.6 /lib/
 
 # copy Rust Startup Script
-COPY ./vanilla.sh /home/steam
+COPY ./vanilla.sh /home/steam/vanilla.sh
+RUN chmod u+x /home/steam/vanilla.sh
 
 # Update SteamCMD and verify latest version Add-Update Rust
 RUN steamcmd +login anonymous +force_install_dir ./rust_server/ +app_update 258550 +quit

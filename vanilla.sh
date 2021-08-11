@@ -1,10 +1,10 @@
 #!/bin/sh
 clear while : do
-  exec ./RustDedicated -batchmode -nographics \
+  exec ./rust_server/RustDedicated -batchmode -nographics \
   -server.ip $IPADDRESS \
-  -server.port 28015 \
+  -server.port $PORT \
   -rcon.ip $IPADDRESS \
-  -rcon.port $PORT \
+  -rcon.port $RCONPORT \
   -rcon.password $RCONPASSWORD \
   -server.maxplayers $MAXPLAYERS \
   -server.hostname $SERVERNAME \
