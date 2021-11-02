@@ -12,7 +12,8 @@ WORKDIR $HOME
 
 # Install prerequisites
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl tar unzip wget
+    && apt-get install -y --no-install-recommends curl tar unzip wget \
+    && apt-get autoremove && apt-get clean
 
 # Donload and unpack installer
 RUN curl http://media.steampowered.com/installer/steamcmd_linux.tar.gz \
@@ -22,7 +23,7 @@ RUN tar -xvzf steamcmd.tar.gz && rm steamcmd.tar.gz
 ######## INSTALL ########
 
 # Set the base image
-FROM alpine:3
+FROM alpine:latest
 
 # Set environment variables
 ENV USER root
@@ -43,7 +44,8 @@ WORKDIR $HOME
 # Install prerequisites
 RUN apk update \
     && apk add --no-cache bash \
-    && rm -rf /var/cache/apk/*
+    && rm -rf /var/cache/apk/* \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy steamcmd files from builder
 COPY --from=builder /root/installer/steamcmd.sh /usr/lib/games/steam/
