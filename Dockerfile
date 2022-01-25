@@ -2,6 +2,7 @@
 
 # Set the base image
 FROM steamcmd/steamcmd:ubuntu-18 as builder
+#FROM steamcmd/steamcmd:alpine as builder
 
 # Set environment variables
 ENV USER root
@@ -13,12 +14,10 @@ WORKDIR $HOME
 # Install prerequisites
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl tar unzip wget \
-    && apt-get autoremove && apt-get clean
-
-# Donload and unpack installer
-RUN curl http://media.steampowered.com/installer/steamcmd_linux.tar.gz \
-    --output steamcmd.tar.gz --silent
-RUN tar -xvzf steamcmd.tar.gz && rm steamcmd.tar.gz
+    && apt-get autoremove && apt-get clean \
+    && curl http://media.steampowered.com/installer/steamcmd_linux.tar.gz \
+    --output steamcmd.tar.gz --silent \
+    && tar -xvzf steamcmd.tar.gz && rm steamcmd.tar.gz
 
 ######## INSTALL ########
 
